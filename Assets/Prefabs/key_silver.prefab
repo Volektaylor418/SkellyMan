@@ -25,6 +25,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 469694}
+  - component: {fileID: 135246836722753440}
   m_Layer: 0
   m_Name: key_silver
   m_TagString: Untagged
@@ -38,8 +39,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 144718}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: 0.0000000027939677, w: 1}
+  m_LocalPosition: {x: 0.23516937, y: -1.4986563, z: -0.6689458}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 469694}
@@ -51,15 +52,15 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 155280}
-  m_LocalRotation: {x: -0.837501, y: 0.018225105, z: -0.09638105, w: 0.5375598}
-  m_LocalPosition: {x: 4.15, y: 0.9248955, z: 2.88}
+  m_LocalRotation: {x: 0.4236427, y: 0.0979354, z: 0.0054886937, w: 0.9005029}
+  m_LocalPosition: {x: 4.415, y: 0.334, z: 2.92}
   m_LocalScale: {x: 0.11942529, y: 0.11942533, z: 0.11942533}
   m_Children:
   - {fileID: 413480}
   - {fileID: 4015468817852718}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -63.754, y: -204.165, z: 197.659}
+  m_LocalEulerAnglesHint: {x: 49.633003, y: -343.769, z: 368.243}
 --- !u!23 &2311228
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -136,7 +137,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1044627000749400}
   m_LocalRotation: {x: 0.83750105, y: -0.018225107, z: 0.09638106, w: 0.53755987}
-  m_LocalPosition: {x: 0.83233726, y: 3.7733696, z: -0.48234612}
+  m_LocalPosition: {x: 0.23516937, y: -1.4986563, z: -0.6689458}
   m_LocalScale: {x: 8.373436, y: 8.373434, z: 8.373434}
   m_Children: []
   m_Father: {fileID: 469694}
@@ -178,3 +179,15 @@ Light:
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!135 &135246836722753440
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 155280}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 6
+  m_Center: {x: 0, y: 0, z: 0}
