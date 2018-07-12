@@ -4,16 +4,20 @@ using UnityEngine;
 
 public class Collectable : Collection {
 
+     
+
     public override void Collect()
     {
+        
         base.Collect();
     }
 
+
     private void OnTriggerEnter(Collider col)
     {
-        if(col.gameObject.tag == "Player")
-        {
-            Collect();
-        }
+        //if(col.gameObject.tag == "Player")
+        //{
+        //    Collect();
+        //}
     }
 }
