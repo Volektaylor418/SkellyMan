@@ -1,0 +1,20 @@
+Skeleton Base Animation List
+
+0005-0010: bind
+0039-0062: backpedal (loop)
+0134-0178: charge (loop)
+0225-0246: die
+0250-0271: die2
+0275-0291: gethit1
+0295-0311: gethit2
+0371-0427: idle1 (loop)
+0586-0682: idle2 (loop)
+0780-0812: jump
+0815-0879: laugh
+0885-0949: roar
+0974-0993: run (loop)
+1031-1047: shuffle left (loop)
+1081-1097: shuffle right (loop)
+1139-1163: strafe left (loop)
+1214-1238: strafe right (loop)
+1289-1313: walk (loop)

@@ -1,0 +1,20 @@
+Skeleton Wizard Animation List
+
+0000-0005: bind
+0010-0050: attack 1
+0055-0091: attack 2
+0119-0143: backpedal (loop)
+0214-0258: dash (loop)
+0305-0326: die
+0330-0346: gethit 1
+0350-0366: gethit 2
+0426-0482: idle 1 (loop)
+0636-0732: idle 2 (loop)
+0830-0862: jump
+0865-0929: laugh
+0935-0999: roar
+1021-1037: shuffle left (loop)
+1071-1087: shuffle right (loop)
+1129-1153: strafe left (loop)
+1204-1228: strafe right (loop)
+1279-1303: walk (loop)

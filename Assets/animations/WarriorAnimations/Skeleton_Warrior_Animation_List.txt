@@ -1,0 +1,24 @@
+Skeleton Warrior Animation List
+
+0000-0005: bind
+0010-0074: attack 1
+0080-0116: attack 2
+0120-0144: attack 3
+0150-0174: attack 4
+0204-0228: backpedal (loop)
+0299-0343: charge (loop)
+0390-0411: death
+0415-0431: gethit 1
+0435-0451: gethit 2
+0511-0567: idle 1 (loop)
+0721-0817: idle 2 (loop)
+0920-0952: jump
+0955-1019: laugh
+1025-1089: roar
+1115-1135: run (loop)
+1160-1188: shield bash
+1206-1222: shiffle left (loop)
+1256-1272: shuffle right (loop)
+1314-1338: strafe left (loop)
+1389-1413: strafe right (loop)
+1464-1488: walk (loop)

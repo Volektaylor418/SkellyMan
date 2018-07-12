@@ -1,0 +1,20 @@
+Skeleton Archer Animation List
+
+0001-0005: bind pose
+0034-0058: backpedal (loop)
+0085-0105: die
+0110-0130: die2
+0135-0150: gethit
+0155-0170: gethit2
+0231-0287: idle (loop)
+0441-0537: idle2 (loop)
+0635-0666: jump
+0670-0733: laugh
+0735-0798: roar
+0819-0838: run (loop)
+0860-0898: shoot
+0916-0932: shuffle left (loop)
+0966-0982: shuffle right (loop)
+1024-1048: strafe left (loop)
+1099-1123: strafe right (loop)
+1174-1198: walk (loop)

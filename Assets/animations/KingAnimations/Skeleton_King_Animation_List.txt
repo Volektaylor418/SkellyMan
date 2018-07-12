@@ -1,0 +1,21 @@
+Skeleton King Animation List
+
+0000-0005: bind
+0015-0047: attack 1
+0055-0095: attack 2
+0124-0148: backpedal (loop)
+0219-0263: charge (loop)
+0310-0331: die
+0336-0352: gethit 1
+0355-0371: gethit 2
+0432-0489: idle 1 (loop)
+0646-0742: idle 2 (loop)
+0840-0872: jump
+0875-0939: laugh
+0945-1009: roar
+1034-1053: run (loop)
+1091-1107: shuffle left (loop)
+1141-1157: shuffle right (loop)
+1199-1223: strafe left (loop)
+1274-1298: strafe right (loop)
+1349-1373: walk (loop)
