@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+
+[RequireComponent(typeof(Animator))]
 public class Character_Controller : MonoBehaviour
 {
 
@@ -10,6 +12,13 @@ public class Character_Controller : MonoBehaviour
     private float _maxSpeed;
     public float WalkBackSpeed = 2;
     public float RotSpeed = 60;
+
+    Vector2 input;
+    float angle;
+
+    Quaternion targetRot;
+    Transform cam;
+
 
     private float verticalVelocity;
     public float jumpforce = 10.0f;
@@ -38,9 +47,11 @@ public class Character_Controller : MonoBehaviour
     public Slider stamina;
     private bool start = false;
     private bool interrupted;
+    public static bool interacting = false;
 
     void Start()
     {
+        cam = Camera.main.transform;
         freezeAllMovement = false;
         _maxSpeed = MaxSpeed;
         _characterController = GetComponent<CharacterController>();
@@ -53,28 +64,7 @@ public class Character_Controller : MonoBehaviour
 
         Jump();
 
-        if (!freezeAllMovement)
-        {
-            Vector3 moveVector = Vector3.zero;
-            moveVector.x = 0;
-            moveVector.y = verticalVelocity;
-            moveVector.z = 0.0001f;
-            _characterController.Move(moveVector * Time.deltaTime);
-
-            float moveX = Input.GetAxis("Horizontal");
-            float moveZ = Input.GetAxis("Vertical");
-
-            Move(moveX, moveZ);
-
-            if (moveVector.x != 0 || moveVector.z != 0)
-            {
-                moving = true;
-            }
-            else if (moveVector.x == 0 && moveVector.z == 0)
-            {
-                moving = false;
-            }
-        }
+        
 
         //Laugh
         if (Input.GetMouseButtonDown(2))
@@ -88,37 +78,51 @@ public class Character_Controller : MonoBehaviour
         //Attack
         if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.JoystickButton2))
         {
-            // first click no previous clicks
-            if (!one_click)
+            if (!interacting)
             {
-                one_click = true;
+                print("attack!");
+                // first click no previous clicks
+                if (!one_click)
+                {
+                    one_click = true;
 
-                // save the current time
-                timer_for_double_click = Time.time;
+                    // save the current time
+                    timer_for_double_click = Time.time;
 
-                // do one click things;
-                _animator.SetBool("Attack", true);
-                //Freeze all movement
-                freezeAllMovement = true;
-                attack = true;
-            }
-            else
-            {
-                // found a double click, now reset
-                one_click = false;
-                doubleClick = true;
-                //do double click things
+                    // do one click things;
+                    if (stamina.value >= 20)
+                    {
+                        _animator.SetBool("Attack", true);
+                        //effect stamina
+                        DecreaseStamina(20);
+
+                        //Freeze all movement
+                        freezeAllMovement = true;
+                        attack = true;
+                    }
+                }
+                else
+                {
+                    // found a double click, now reset
+                    one_click = false;
+                    doubleClick = true;
+                    //do double click things
+                }
             }
         }
 
         if (doubleClick)
         {
-            doubleClick = false;
-            _animator.SetBool("OneClick", false);
-            attack = true;
-            //Freeze all movement
-            freezeAllMovement = true;
-            _animator.Play("Attack_Combo");
+            if (stamina.value >= 40)
+            {
+                DecreaseStamina(40);
+                doubleClick = false;
+                _animator.SetBool("OneClick", false);
+                attack = true;
+                //Freeze all movement
+                freezeAllMovement = true;
+                _animator.Play("Attack_Combo");
+            }
         }
 
         if (one_click)
@@ -167,6 +171,61 @@ public class Character_Controller : MonoBehaviour
             start = false;
         }
 
+        if (!freezeAllMovement)
+        {
+            Vector3 moveVector = Vector3.zero;
+            moveVector.x = 0;
+            moveVector.y = verticalVelocity;
+            moveVector.z = 0.0001f;
+            _characterController.Move(moveVector * Time.deltaTime);
+
+            GetInput();
+
+            if (Mathf.Abs(input.x) < 1 && Mathf.Abs(input.y) < 1) return;
+
+            CalculateDirection();
+            Rotate();
+            Move();
+        }
+
+    }
+
+    void GetInput()
+    {
+        //input = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+
+
+        float deadzone = 0.25f;
+        input.x = Input.GetAxisRaw("Horizontal");
+
+        input.y = Input.GetAxisRaw("Vertical");
+
+        //if (input.sqrMagnitude > 1.0f) input.Normalize();
+        if (input.magnitude < deadzone)
+            input = Vector2.zero;
+        else
+            input = input.normalized * ((input.magnitude - deadzone) / (1 - deadzone));
+
+        _animator.SetFloat("VelX", input.x);
+        _animator.SetFloat("VelY", input.y);
+    }
+
+    void CalculateDirection()
+    {
+        angle = Mathf.Atan2(input.x, input.y);
+        angle = Mathf.Rad2Deg * angle;
+        angle += cam.eulerAngles.y;
+    }
+
+    void Rotate()
+    {
+        targetRot = Quaternion.Euler(0, angle, 0);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, RotSpeed * Time.deltaTime);
+    }
+
+    void Move()
+    {
+        transform.position += transform.forward * MaxSpeed * Time.deltaTime;
     }
 
     IEnumerator IncreaseStamina(float value, float time)
@@ -199,22 +258,34 @@ public class Character_Controller : MonoBehaviour
         freezeAllMovement = false;
     }
 
-    void Move(float x, float y)
-    {
-        transform.Translate(0, 0, y * Time.deltaTime * MaxSpeed);
-        transform.Rotate(0, x * RotSpeed * Time.deltaTime, 0);
-        _animator.SetFloat("VelX", x);
-        _animator.SetFloat("VelY", y);
+    //void Move(float x, float y)
+    //{
+        
+    //    if (x > 0)
+    //    {
+    //        transform.eulerAngles = new Vector3(0, 90, 0);
+    //        transform.Translate(y * Time.deltaTime * MaxSpeed, 0, 0);
+    //    }
+    //    else if(x < 0)
+    //    {
+    //        transform.eulerAngles = new Vector3(0, -90, 0);
+    //        transform.Translate(-y * Time.deltaTime * MaxSpeed, 0, 0);
+    //    }
+    //    if(y < 0)
+    //    {
+    //        transform.eulerAngles = new Vector3(0, 180, 0);
+    //        transform.Translate(0, 0, -y * Time.deltaTime * MaxSpeed);
 
-        if (y < 0)
-        {
-            MaxSpeed = WalkBackSpeed;
-        }
-        else
-        {
-            MaxSpeed = _maxSpeed;
-        }
-    }
+    //    }
+    //    else if(y > 0)
+    //    {
+    //        transform.eulerAngles = new Vector3(0, 0, 0);
+    //        transform.Translate(0, 0, y * Time.deltaTime * MaxSpeed);
+    //    }
+        
+
+        
+    //}
 
     void Jump()
     {

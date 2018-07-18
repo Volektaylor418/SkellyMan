@@ -30,6 +30,7 @@ public class Collecting : MonoBehaviour
         {
             if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Collectable"))
             {
+                Character_Controller.interacting = true;
                 interactText.SetActive(true);
                 if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.JoystickButton2))
                 {
@@ -41,12 +42,11 @@ public class Collecting : MonoBehaviour
                         KeyCount.text = keyCount.ToString();
                     }
                 }
-
-            }
+            }       
         }
-
         else
         {
+            Character_Controller.interacting = false;
             interactText.SetActive(false);
         }
         //Debug.DrawRay(transform.position, Vector3.forward * hit.distance, Color.yellow);

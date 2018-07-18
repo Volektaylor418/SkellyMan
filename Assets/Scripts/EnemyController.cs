@@ -54,5 +54,6 @@ public class EnemyController : MonoBehaviour
         // Update position to agent position
         transform.position = agent.nextPosition;
         agent.stoppingDistance = 3;
+        //transform.LookAt(target);
     }
 }
